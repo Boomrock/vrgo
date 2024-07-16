@@ -2,12 +2,15 @@
   "expo": {
     "name": "vrgo",
     "slug": "vrgo",
-    "version": "1.0.0",
+    "version": "1.0.3",
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
+    "icon": "./source/assets/images/other/icon.png",
     "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "assets/**/*"
+    ],
     "splash": {
-      "image": "./assets/splash.png",
+      "image": "./source/assets/images/other/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
@@ -16,17 +19,19 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
+        "foregroundImage": "./source/assets/images/other/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.renae.vrgo"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./source/assets/images/other/favicon.png"
     },
     "extra": {
       "eas": {
         "projectId": "7e0b7129-5104-4293-8d71-b6ddf49f1545"
       }
-    }
+    },
+    "owner": "renae"
   }
 }

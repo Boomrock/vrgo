@@ -38,7 +38,7 @@ export default function SessionTooltips(prop: tooltipProp) {
         {
             if(prop.emitter){
             setTimerRunning(false)
-              let emitterListener = prop.emitter.addListener(SessionEvent.timerOverNotify, ()=>{ stopTimer();setNextButtonEnable(true); setTimerRunning(false);});
+              let emitterListener = prop.emitter.addListener(SessionEvent.timerOverNotify, ()=>{ stopTimer(); setNextButtonEnable(true); setTimerRunning(false);});
               setListener(emitterListener);
             }
             prop.StartTimer!();
@@ -56,9 +56,13 @@ export default function SessionTooltips(prop: tooltipProp) {
         }
     const nextButtonHandler =()=>{
       if(!nextButtonEnable){
+        
+        if(!timerRunning) return;
+        
         setTimerExerciseModalVisible(true);
         return;
       }
+      
 
       prop.NextButtonAction();
     }

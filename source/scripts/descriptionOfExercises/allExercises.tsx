@@ -22,18 +22,6 @@ export enum StepType{
     Sample = "Обычный шаг упражнения",
     Mark = "С плюсиком (добавление к упражнению)"
 }
-//pathology
-//bodyPart
-//exerciseType
-//exercises:[
-//description
-//prefrace?
-//  steps[
-//      instruction      
-//      image?
-//      type?
-//  ]
-//]
 export const allExercises = [
     {
         pathology: Pathology.Stroke,

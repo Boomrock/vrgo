@@ -123,7 +123,7 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   const clearStackAndNavigate = () => {
     ClearStackAndNavigate(navigation, Screens.MainScreen);
   };
-
+  //TEXT
   const text_1: string = "Желательно выполнять под присмотром или с тростью \n После ознакомления с инструкцией нажмите 'старт'";
   const [modalWindow, setModalWindow] = useState(true);
   const toggleModal = () => {
@@ -177,6 +177,7 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
       tooltipProps.emitter =  session!.emitter;
     }
   }
+  //TEXT
   return (
     <>
       <View style={styles.container}>

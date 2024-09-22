@@ -42,13 +42,12 @@ export class ExerciseSelectorBuilder implements IExerciseSelectorBuilder {
     }
 }
 
-// Example usage
-let selectorBuilder = new ExerciseSelectorBuilder();
-let selector = selectorBuilder.AddPathology("Патология").AddAffectedRegion(["Рука", "Нога"]).Build();
-let exercises = [
-    new Exercise(90, "Exercise 1 with Патология and Рука", [new ExerciseStep("")]),
-    new Exercise(90, "Exercise 2 with Нога",[new ExerciseStep("")]),
-    new Exercise(90, "Exercise 3 without Патология",[new ExerciseStep("")])
-];
-let selectedExercises = selector.Select(exercises);
-console.log(selectedExercises);
+// // Example usage
+// let selectorBuilder = new ExerciseSelectorBuilder();
+// let selector = selectorBuilder.AddPathology("Патология").AddAffectedRegion(["Рука", "Нога"]).Build();
+// let exercises = [
+//     new Exercise(90, "Exercise 1 with Патология and Рука", [new ExerciseStep("")]),
+//     new Exercise(90, "Exercise 2 with Нога",[new ExerciseStep("")]),
+//     new Exercise(90, "Exercise 3 without Патология",[new ExerciseStep("")])
+// ];
+// let selectedExercises = selector.Select(exercises);

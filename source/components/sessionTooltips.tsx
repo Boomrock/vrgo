@@ -66,6 +66,7 @@ export default function SessionTooltips(prop: tooltipProp) {
 
       prop.NextButtonAction();
     }
+    //TEXT
     let textBodyModal: string = `Столько мы рекомендуем делать повтор упражнения на каждую гемиплегичную часть тела`;
     return (
       <View style={{...styles.btnContainer, margin: prop.margin}}>
@@ -74,6 +75,7 @@ export default function SessionTooltips(prop: tooltipProp) {
         <OneButtonWin modalWindow = {countExerciseModalVisible} textHead = {`По ${prop.NumbOfReps} раз`} textBody = {textBodyModal} toggleModal ={() => setCountExerciseModalVisible(false)}/>
         <Clarification 
         isVisibleWindow = {timerExerciseModalVisible && timerRunning} 
+        //TEXT
         header={'Упс!'}  
         body={'Вы еще не прошли упражнение по таймеру до конца, если это упражнение уже было — повторите еще раз'} 
         textBut1='Перейти к следущему' 

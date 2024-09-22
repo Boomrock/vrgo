@@ -19,11 +19,13 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
   const loadScene = () => {
     navigation.navigate(Screens.ChoosingBodyPart, { selectedPathology });
   };
+  //TEXT 
 
   return (
     <View style={styles.background}>
       <View style={styles.container}>
         <Text style={styles.guideText}>
+          
           Начните вводить патологию или нарушение необходимое к физиотерапии
         </Text>
         <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/>

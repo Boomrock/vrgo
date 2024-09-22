@@ -1,7 +1,6 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions} from 'react-native';
-import Checkbox from 'expo-checkbox';
 import { HelpButton, UnderstandButton, NextButton, BackButton, NextButtonEnabling } from '@components/buttonsComponent';
 import { NavigationContext} from '@navigations/navigate';
 import { Screens } from '@navigations/Screens';
@@ -72,7 +71,7 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
   const checkBoxChange = (arg: boolean) => {
     dataProvider.Set<boolean>(arg, Path.choosingBodyPartChooseModal);
   }
-
+  //TEXT 
   const text_1: string = "Аватар будет к вам лицом. \nВам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран."
   const text_2: string ='Вам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран.'
   

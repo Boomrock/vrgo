@@ -29,6 +29,7 @@ export class Exercise{
         executeTime: number = 40, 
         description: string, 
         steps: ExerciseStep[],
+        //TEXT
         preface: string = 'Предисловие к упажнению',
         exerciseType: ExerciseType = ExerciseType.COUNT,
         countOfRepeat: number = 10){

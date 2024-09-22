@@ -20,7 +20,7 @@ const Stack = createStackNavigator();
 export default function Navigate(initialScreen: string){
 
     const [data, setData] = useState({ dataProvider: DataProvider.GetInstance() });
-    
+    //TEXT
     return (
         <>
         <StatusBar style="light" backgroundColor="black"/>

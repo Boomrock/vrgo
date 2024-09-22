@@ -26,6 +26,7 @@ export default function MainScreen({navigation}: {navigation: any}) {
     const loadBodyPartScene = () => {
       navigation.navigate('ChoosingBodyPart', {backScene: 'MainScreen'})
     }
+  //TEXT 
 
     var BodyParts: string[] = [];
     useEffect(()=>{
@@ -53,6 +54,7 @@ export default function MainScreen({navigation}: {navigation: any}) {
       setSelectedBodyParts(BodyParts);
       })
     },[])  
+    //TEXT
 
     return (
       <View style={styles.background}>

@@ -67,7 +67,7 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
         setIsFocused(false);
       }
     };
-  
+    //TEXT
     return (
       <View style={styles.container}>
         {isFocused ? (
@@ -80,12 +80,14 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
             // onBlur={() => {setIsFocused(false)}} // Обработчик события потери фокуса
           />
         ) : (
+          //TEXT
           <SelectedPatology text={selectedItem ? selectedItem.label : 'Начните вводить свою патологию.'} 
           onPress={() => setIsFocused(true)} /> // Обработчик события нажатия
         )}
         {isFocused && (
         <ScrollView>
           {filteredData.map(item => {
+            //TEXT
             if (item.label === 'Нет моей патологии') {
               return (
                 <NoPatologyElement

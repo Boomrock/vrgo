@@ -61,7 +61,7 @@ export class Session {
     dequeue(): Exercise | null {
         if (this._exerciseQueue.length === 0) {
             this.close();
-            console.log("сессия небыло упражений Session:start");
+            console.log("сессия не было упражений Session:start");
             return null;
         }
         const exercise = this._exerciseQueue.shift()!;

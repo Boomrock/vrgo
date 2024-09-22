@@ -73,7 +73,6 @@ export class DataProvider implements IDataProvider{
     
 
     async Set<T>(data: T, tag: string): Promise<void> {
-        console.debug('Set');
         return new Promise<void>((resolve, reject)=>{
 
             var cashedData = this.dictionary.get(tag);

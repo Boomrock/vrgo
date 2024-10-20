@@ -1,8 +1,6 @@
-import { ContinueExerciseButton, NextButtonLightWide, NextExerciseButton, UnderstandButton } from '@components/buttonsComponent';
 import * as React from 'react';
 import { StyleSheet, Text, Button, Modal, View, Dimensions} from 'react-native';
 import styles from '@styles/styles';
-import { AntDesign } from '@expo/vector-icons';
 
 interface TooltipProps { 
     isVisibleWindow:boolean;
@@ -27,8 +25,8 @@ export default function Clarification({isVisibleWindow: modalWindow, header, bod
                         <View>
                             <Text style={styles.textTitle}>{header}</Text>
                             <Text style={styles.textModalWindow}>{body}</Text> 
-                            <NextExerciseButton action={() => disagreeHandler()} styles={{width:'100%'}}/>
-                            <ContinueExerciseButton action={() => agreeHandler()} styles={{width:'100%'}}/>
+                            {/* <NextExerciseButton action={() => disagreeHandler()} styles={{width:'100%'}}/>
+                            <ContinueExerciseButton action={() => agreeHandler()} styles={{width:'100%'}}/> */}
                         </View>       
                     </View>
                 </View>

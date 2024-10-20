@@ -16,8 +16,8 @@ interface CustomButtonProps {
   onPress: () => void;
 }
 
-const leftArrowImage = require('../assets/images/button/arrow_left.png');
-const rightArrowImage = require('../assets/images/button/arrow_right.png');
+const leftArrowImage = require('../assets/images/buttonText/arrow_left.png');
+const rightArrowImage = require('../assets/images/buttonText/arrow_right.png');
 
 const CustomButton: FC<CustomButtonProps> = ({ source, onPress }) => (
   <TouchableOpacity onPress={onPress} style={styles.arrow}>

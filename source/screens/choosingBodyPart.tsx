@@ -1,12 +1,13 @@
 import * as React from 'react';
 import { useContext, useEffect, useState } from 'react';
 import { StyleSheet, Text, View, Modal, Image, TouchableOpacity, Dimensions} from 'react-native';
-import { HelpButton, UnderstandButton, NextButton, BackButton, NextButtonEnabling } from '@components/buttonsComponent';
-import { NavigationContext} from '@navigations/navigate';
+import { ClearStackAndNavigate, NavigationContext} from '@navigations/navigate';
 import { Screens } from '@navigations/Screens';
 import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
 import TooltipWin from '../components/Modal/tooltipWin';
 import OneButtonWin from '@components/Modal/oneButtonWin';
+import i18n from '@scripts/localization/i18next';
+import { BackButton, InfoButton, NextButtonEnabling } from '@components/buttonsComponent';
 
 // Получаем разрешение экрана
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
@@ -58,7 +59,7 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
     navigation.navigate(Screens.MainScreen)
   }
   
-  const loadExerciseScene = () => {
+  const loadMainScene = () => {
     let chose: ChoseBodyPart = {
       isCheckedRightHand: isCheckedRightHand,
       isCheckedLeftHand: isCheckedLeftHand,
@@ -66,70 +67,72 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
       isCheckedLeftLeg: isCheckedLeftLeg,
     };
     dataProvider.Set(chose, Path.choseBodyPart);
-    navigation.navigate(Screens.SessionScreen)
+    ClearStackAndNavigate(navigation, Screens.MainScreen)
   }
   const checkBoxChange = (arg: boolean) => {
     dataProvider.Set<boolean>(arg, Path.choosingBodyPartChooseModal);
   }
   //TEXT 
-  const text_1: string = "Аватар будет к вам лицом. \nВам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран."
-  const text_2: string ='Вам необходимо нажать на те части аватара, где у вас находятся нарушения. \nС этими областями вам будет предложено работать через упражнения. Вы всегда сможете изменить их, вернувшись на соответствующий экран.'
+  const text_1: string = i18n.t('First modal instructions for selecting a Body Part');
+  const text_2: string =i18n.t('Modal instructions for selecting a Body Part')
   
   return (
-    <View style={{...styles.background}}>
-      <View style={{width: disp_width, marginTop: '12%'}}>
-        <HelpButton action={() => setCheckedModalWin(true)}></HelpButton>
-        <TooltipWin modalWindow = {modalWindow && !savedChoseModalVisible} textHead = 'Инструкция' textBody = {text_1} toggleModal = {toggleModal} checkBoxChange={checkBoxChange}/>
-        <OneButtonWin modalWindow = {isCheckedModalWin} textHead = 'Инструкция' textBody = {text_2} toggleModal = {toggleModal2} />
-      </View>
+  <View style={{...styles.background}}>
     <View style={{...styles.container}}>
+      
+      <View style={{marginTop: '10%', marginBottom:8}}>
+        <InfoButton action={() => setCheckedModalWin(true)} text={i18n.t('View hint')}/>
+        <TooltipWin modalWindow = {modalWindow && !savedChoseModalVisible} textHead = {i18n.t('Intruction')} textBody = {text_1} toggleModal = {toggleModal} checkBoxChange={checkBoxChange}/>
+        <OneButtonWin modalWindow = {isCheckedModalWin} textHead = {i18n.t('Intruction')} textBody = {text_2} toggleModal = {toggleModal2} />
+      </View>
+
       <View style={styles.row}>
       <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedRightHand ? '#393220' : '#323939'}} onPress={() => CheckRightHand(!isCheckedRightHand)}>
             <View style={{flex: 1, justifyContent: 'flex-start'}}>
-              <Text style={{...styles.sideText, textAlign: 'left', marginLeft: 15, marginTop: 15}}>Правая</Text>
-              <Text style={{...styles.sideText, textAlign: 'left', marginLeft: 15}}>Сторона</Text>
+              <Text style={{...styles.sideText, textAlign: 'left', marginLeft: 15, marginTop: 15}}>{i18n.t("Right")}</Text>
+              <Text style={{...styles.sideText, textAlign: 'left', marginLeft: 15}}>{i18n.t("Side")}</Text>
             </View>
             <View style={{marginLeft: 16, marginBottom: 16}}>
-            <Text style={{...styles.text, textAlign: 'left', marginBottom: 8, color: isCheckedRightHand ? '#FFB800' : '#FFFFFF'}}>рука</Text>
-            <Image style={{opacity: isCheckedRightHand ? 1 : 0}} source={require('@images/button/checkcircle.png')}></Image>
+            <Text style={{...styles.text, textAlign: 'left', marginBottom: 8, color: isCheckedRightHand ? '#FFB800' : '#FFFFFF'}}>{i18n.t("Hand")}</Text>
+            <Image style={{opacity: isCheckedRightHand ? 1 : 0}} source={require('@images/buttonText/checkcircle.png')}></Image>
             </View>
         </TouchableOpacity>
         <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedLeftHand ? '#393220' : '#323939'}} onPress={() => CheckLeftHand(!isCheckedLeftHand)}>
             <View style={{flex: 1, justifyContent: 'flex-start'}}>
-             <Text style={{...styles.sideText, textAlign: 'right', marginRight: 15, marginTop: 15}}>Левая</Text>
-              <Text style={{...styles.sideText, textAlign: 'right', marginRight: 15}}>Сторона</Text>
+            <Text style={{...styles.sideText, textAlign: 'right', marginRight: 15, marginTop: 15}}>{i18n.t("Left")}</Text>
+              <Text style={{...styles.sideText, textAlign: 'right', marginRight: 15}}>{i18n.t("Side")}</Text>
             </View>
             <View style={{marginRight: 16, marginBottom: 16}}>
-            <Text style={{...styles.text, textAlign: 'right', marginBottom: 8, color: isCheckedLeftHand ? '#FFB800' : '#FFFFFF'}}>рука</Text>
-            <Image style={{alignSelf: 'flex-end', opacity: isCheckedLeftHand ? 1 : 0}} source={require('@images/button/checkcircle.png')}></Image>
+            <Text style={{...styles.text, textAlign: 'right', marginBottom: 8, color: isCheckedLeftHand ? '#FFB800' : '#FFFFFF'}}>{i18n.t("Hand")}</Text>
+            <Image style={{alignSelf: 'flex-end', opacity: isCheckedLeftHand ? 1 : 0}} source={require('@images/buttonText/checkcircle.png')}></Image>
             </View>
           </TouchableOpacity>
         </View>
       <View style={{...styles.row}}>
         <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedRightLeg ? '#393220' : '#323939'}} onPress={() => CheckRightLeg(!isCheckedRightLeg)}>
         <View style={{marginLeft: 16, marginTop: 16}}>
-            <Text style={{...styles.text, textAlign: 'left', marginBottom: 8, color: isCheckedRightLeg ? '#FFB800' : '#FFFFFF'}}>нога</Text>
-            <Image style={{opacity: isCheckedRightLeg ? 1 : 0}} source={require('@images/button/checkcircle.png')}></Image>
+            <Text style={{...styles.text, textAlign: 'left', marginBottom: 8, color: isCheckedRightLeg ? '#FFB800' : '#FFFFFF'}}>{i18n.t("Leg")}</Text>
+            <Image style={{opacity: isCheckedRightLeg ? 1 : 0}} source={require('@images/buttonText/checkcircle.png')}></Image>
             </View>
         </TouchableOpacity>
         <TouchableOpacity style={{...styles.expanded, backgroundColor: isCheckedLeftLeg ? '#393220' : '#323939'}} onPress={() => CheckLeftLeg(!isCheckedLeftLeg)}>
         <View style={{marginRight: 16, marginTop: 16}}>
-            <Text style={{...styles.text, textAlign: 'right', marginBottom: 8, color: isCheckedLeftLeg ? '#FFB800' : '#FFFFFF'}}>нога</Text>
-            <Image style={{alignSelf: 'flex-end', opacity: isCheckedLeftLeg ? 1 : 0}} source={require('@images/button/checkcircle.png')}></Image>
+            <Text style={{...styles.text, textAlign: 'right', marginBottom: 8, color: isCheckedLeftLeg ? '#FFB800' : '#FFFFFF'}}>{i18n.t("Leg")}</Text>
+            <Image style={{alignSelf: 'flex-end', opacity: isCheckedLeftLeg ? 1 : 0}} source={require('@images/buttonText/checkcircle.png')}></Image>
             </View>
         </TouchableOpacity>
       </View>
       <View style={styles.btnContainer} >
-        <View style={{width: disp_width * 0.34, marginBottom: '2%'}}>
-          <BackButton action={loadScene} />
+        <View style={{flex: 34, marginBottom: '2%'}}>
+          <BackButton action={loadScene}  text={i18n.t("Back")}/>
         </View>
-        <View style={{width: disp_width * 0.62, marginBottom: '2%'}}>
-          <NextButtonEnabling action={loadExerciseScene} enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)} title=''/>
+        <View style={{flex: 66, marginBottom: '2%', marginLeft: 5}}>
+          <NextButtonEnabling action={loadMainScene} text='Next' enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)}/>
         </View>
       </View>
       <View style={styles.bodypartsview}>
         <View pointerEvents='none' style={{alignSelf: 'center', marginBottom: 5 }}>
-        <Image resizeMode='contain' source={require('@images/bodyparts/head.png')}/>
+          <Image resizeMode='contain' source={require('@images/bodyparts/head.png')}/>  
         </View>        
         <View style={{ flexDirection: 'row', alignSelf: 'center' }}>
           <TouchableOpacity style={{marginTop: 25, paddingRight: 2}} onPress={() => CheckRightHand(!isCheckedRightHand)}>
@@ -143,12 +146,12 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
           </TouchableOpacity>
         </View>
         <View  style={{ marginTop: -105, flexDirection: 'row', alignContent: 'center', alignSelf: 'center'}}>
-        <TouchableOpacity onPress={() => CheckRightLeg(!isCheckedRightLeg)}>
-          <Image  resizeMode='contain' style={{marginRight: 5}} source={isCheckedRightLeg ? require('@images/bodyparts/rightleg_on.png') : require('@images/bodyparts/rightleg_off.png')}/>
-        </TouchableOpacity>
-        <TouchableOpacity  onPress={() => CheckLeftLeg(!isCheckedLeftLeg)}>
-          <Image  resizeMode='cover' style={{marginLeft: 5}} source={isCheckedLeftLeg ? require('@images/bodyparts/leftleg_on.png') : require('@images/bodyparts/leftleg_off.png')}/>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={() => CheckRightLeg(!isCheckedRightLeg)}>
+            <Image  resizeMode='contain' style={{marginRight: 5}} source={isCheckedRightLeg ? require('@images/bodyparts/rightleg_on.png') : require('@images/bodyparts/rightleg_off.png')}/>
+          </TouchableOpacity>
+          <TouchableOpacity  onPress={() => CheckLeftLeg(!isCheckedLeftLeg)}>
+            <Image  resizeMode='cover' style={{marginLeft: 5}} source={isCheckedLeftLeg ? require('@images/bodyparts/leftleg_on.png') : require('@images/bodyparts/leftleg_off.png')}/>
+          </TouchableOpacity>
         </View>
       </View>
     </View>
@@ -162,12 +165,12 @@ const styles = StyleSheet.create({
     justifyContent: 'center'
   },
   container: {
+    margin:10,
     flex: 1,
     backgroundColor: '#232323',
-    margin: 2,
   },
   bodypartsview: {
-    top: 0,
+    top: '20%',
     left: '50%',
     right: 0,
     bottom: 0,
@@ -188,8 +191,7 @@ const styles = StyleSheet.create({
     },
   row: {
     flex: 1,
-    flexDirection: 'row',
-    margin: 1
+    flexDirection: 'row'
   },
   bottom_btn_navbar: {
     flexDirection: 'row',

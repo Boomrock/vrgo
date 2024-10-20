@@ -4,7 +4,8 @@ import { StyleSheet, Text, Button, Modal, View, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { AntDesign } from '@expo/vector-icons';
 import styles from '@styles/styles';
-import { UnderstandButton } from '@components/buttonsComponent';
+import { FullButton} from '@components/buttonsComponent';
+import i18n from '@scripts/localization/i18next';
 
 
 interface Props { 
@@ -33,8 +34,7 @@ export default function OneButtonWin({modalWindow, textHead, textBody, toggleMod
                     <View style={{width: '100%'}}>
                         <Text style={{...styles.textTitle, ...styles.textModalWindow}}>{textHead}</Text>
                         <Text style={{...styles.textDefault, ...styles.textModalWindow}}>{textBody}</Text>
-                        <UnderstandButton action ={() => close()}></UnderstandButton>
-
+                        <FullButton action ={() => close()} text={i18n.t("Understand")}/>
                     </View>
                 </View>
             </View>

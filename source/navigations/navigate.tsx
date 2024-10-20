@@ -27,7 +27,7 @@ export default function Navigate(initialScreen: string){
     <NavigationContainer>
         <NavigationContext.Provider value={{data, setData}}>
         <Stack.Navigator initialRouteName={initialScreen}>
-            <Stack.Screen
+        <Stack.Screen
                     name={Screens.Start}
                     component={Start}
                     options={{title: 'Выбор патологии',  headerShown: false}}

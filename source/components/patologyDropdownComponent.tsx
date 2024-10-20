@@ -2,19 +2,19 @@ import React, { useEffect, useState } from 'react';
 import {PatologyElement, NoPatologyElement, SelectedPatology} from '@components/patologyElement';
 import { View, TextInput, ScrollView, StyleSheet, Dimensions, } from 'react-native';
 import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataProvider';
-import { DataProvider } from '@scripts/utils/DataProvider';
 import { Pathology } from '@scripts/descriptionOfExercises/allExercises';
+import i18n from '@scripts/localization/i18next';
 const { width: disp_width } = Dimensions.get('window');
 const sideMargin = 16;
 
 const dataFromJson = [ // Здесь мы берем откуда-то массив патологий
-  { label: Pathology.Stroke, value: '1' },
-  { label: Pathology.BrainInjury, value: '2' },
-  { label: Pathology.SpinalCordInjury, value: '3' },
-  { label: Pathology.MultipleSclerosis, value: '4' },
-  { label: Pathology.CerebralPalsy, value: '5' }];
+  { label: i18n.t(Pathology.Stroke), value: '1' },
+  { label: i18n.t(Pathology.BrainInjury), value: '2' },
+  { label: i18n.t(Pathology.SpinalCordInjury), value: '3' },
+  { label: i18n.t(Pathology.MultipleSclerosis), value: '4' },
+  { label: i18n.t(Pathology.CerebralPalsy), value: '5' }];
 
-  const NoPatology = {label: 'Нет моей патологии', value: '0'};
+  const NoPatology = {label: i18n.t('My pathology is not listed'), value: '0'};
 
   const data = [...dataFromJson, NoPatology];
 
@@ -26,7 +26,6 @@ interface Item {
 interface DropdownProps {
     onSelect: (value: string) => void;
     dataProvider: IDataProvider;
-    //data: Item[];
 }
 
 export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
@@ -43,7 +42,7 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
       const filtered = data.filter(item =>
         item.label.toLowerCase().includes(text.toLowerCase())
       );
-      const noPathologyItem = data.find(item => item.label === 'Нет моей патологии');
+      const noPathologyItem = data.find(item => item.label === i18n.t('My pathology is not listed'));
       if (noPathologyItem && !filtered.includes(noPathologyItem)) {
         filtered.push(noPathologyItem);
       }
@@ -67,28 +66,26 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
         setIsFocused(false);
       }
     };
-    //TEXT
     return (
       <View style={styles.container}>
         {isFocused ? (
           <TextInput
             style={styles.inputText}
-            placeholder="Начните вводить"
+            placeholder={i18n.t("Start typing")}
             placeholderTextColor="#888888"
             onChangeText={filterData}
             value={searchText}
             // onBlur={() => {setIsFocused(false)}} // Обработчик события потери фокуса
           />
         ) : (
-          //TEXT
-          <SelectedPatology text={selectedItem ? selectedItem.label : 'Начните вводить свою патологию.'} 
+
+          <SelectedPatology text={selectedItem ? selectedItem.label : i18n.t('Start entering your pathology')} 
           onPress={() => setIsFocused(true)} /> // Обработчик события нажатия
         )}
         {isFocused && (
         <ScrollView>
           {filteredData.map(item => {
-            //TEXT
-            if (item.label === 'Нет моей патологии') {
+            if (item.label === i18n.t('My pathology is not listed')) {
               return (
                 <NoPatologyElement
                   key={item.value}

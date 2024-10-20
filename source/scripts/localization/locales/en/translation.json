@@ -1,0 +1,52 @@
+{
+    "left hand": "left hand",
+    "right hand": "right hand",
+    "left leg": "left leg",
+    "right leg": "right leg",
+    "left and right hands": "left and right hands",
+    "left and right legs": "left and right legs",
+    "Is your pathology correct?": "Is your pathology correct?",
+    "Are the areas of exercises correct?": "Are the areas of exercises correct?",
+    "Start entering your pathology": "Start entering your pathology.",
+    "Start typing": "Start typing",
+    "My pathology is not listed": "My pathology is not listed",
+    "Stroke": "Stroke",
+    "BrainInjury": "Brain Injury",
+    "SpinalCordInjury": "Spinal Cord Injury",
+    "MultipleSclerosis": "Multiple Sclerosis",
+    "CerebralPalsy": "Cerebral Palsy", 
+    "Hand": "Hand",
+    "Side": "Side",
+    "Left": "Left",
+    "Right": "Right",
+    "Leg": "Leg",
+    "Start exercising": "Start exercising",
+    "Next": "Next",
+    "Understand": "Understand",
+    "View hint": "View hint",
+    "Back": "Back",
+    "Start": "Start",
+    "Do times": "Do {Count} times",
+    "language": "en",
+
+    "Repeat timer exercise": 
+    "You have not yet completed the timer exercise; if this exercise has already been done, repeat it again.",
+
+    "Continue the exercise": "Continue the exercise",
+    "Go to next": "Go to next",
+    "We recommend repeating for each":
+    "We recommend repeating the exercise for each hemiplegic body part this many times.",
+
+    "First modal instructions for selecting a Body Part":
+    "The avatar will be your face.\nYou need to click on the parts of the avatar where you have violations.\nYou will be offered exercises to work on these areas. You can always change them by returning to the corresponding screen.",
+
+    "Modal instructions for selecting a Body Part":
+    "You need to click on those parts of the avatar where you have violations. \nYou will be offered to work with these areas through exercises. You can always change them by returning to the appropriate screen.",
+
+    "Intruction": "Intruction",
+
+    "Exercises completed":"exercises completed",
+    "Take a break": "Take a break to recover between exercises",
+    "Break":"Break",
+    "Remaining":"Remaining"
+  }

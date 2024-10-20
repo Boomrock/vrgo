@@ -1,10 +1,11 @@
 import { View, StyleSheet, TouchableOpacity, Text, Modal} from 'react-native';
-import { StartButtonEmpty, NextButtonEnablingDark, RunningExerciseButton} from './buttonsComponent';
 import { useEffect, useMemo, useState } from 'react';
 import EventEmitter, { EmitterSubscription } from 'react-native/Libraries/vendor/emitter/EventEmitter';
 import { SessionEvent } from '@scripts/models/Session';
 import OneButtonWin from './Modal/oneButtonWin';
 import Clarification from './Modal/clarificationWin';
+import { FullOrangeButton, NextButtonEnabling, SimpleButton, StartButton } from './buttonsComponent';
+import i18n from '@scripts/localization/i18next';
 
 export interface tooltipProp {
     FirstWidth: number;
@@ -67,19 +68,19 @@ export default function SessionTooltips(prop: tooltipProp) {
       prop.NextButtonAction();
     }
     //TEXT
-    let textBodyModal: string = `Столько мы рекомендуем делать повтор упражнения на каждую гемиплегичную часть тела`;
+    let textBodyModal: string = i18n.t('We recommend repeating for each');
     return (
       <View style={{...styles.btnContainer, margin: prop.margin}}>
 
 
-        <OneButtonWin modalWindow = {countExerciseModalVisible} textHead = {`По ${prop.NumbOfReps} раз`} textBody = {textBodyModal} toggleModal ={() => setCountExerciseModalVisible(false)}/>
+        {prop.NumbOfReps && <OneButtonWin modalWindow = {countExerciseModalVisible} textHead = {i18n.t('Do times').replace("{Count}", prop.NumbOfReps!.toString())} textBody = {textBodyModal} toggleModal ={() => setCountExerciseModalVisible(false)}/>}
         <Clarification 
         isVisibleWindow = {timerExerciseModalVisible && timerRunning} 
         //TEXT
-        header={'Упс!'}  
-        body={'Вы еще не прошли упражнение по таймеру до конца, если это упражнение уже было — повторите еще раз'} 
-        textBut1='Перейти к следущему' 
-        textBut2='Продолжить упражнение' 
+        header={i18n.t('Ups!')}  
+        body={i18n.t("Repeat timer exercise")} 
+        textBut1={i18n.t("Go to next")} 
+        textBut2={i18n.t("Continue the exercise")}
         agreeHandler={() => setTimerExerciseModalVisible(false)} 
         disagreeHandler={()=> prop.NextButtonAction()}
         toggleModal={() => setTimerExerciseModalVisible(false)}/>
@@ -87,24 +88,26 @@ export default function SessionTooltips(prop: tooltipProp) {
         {prop.NumbOfReps ? ( // Если упражнение на кол-во
           <>
             <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
-              <StartButtonEmpty title={`${prop.NumbOfReps} раз`} enabled={true} 
-              action={() => setCountExerciseModalVisible(true)}/>
+              <SimpleButton text={i18n.t('Do times').replace("{Count}", prop.NumbOfReps.toString())} enabled={true} 
+              leftCorner={true} action={() => setCountExerciseModalVisible(true)}/>
             </View>
             <View style={{width: prop.SecondWidth}} >
-               <NextButtonEnablingDark action={prop.NextButtonAction} title='Next' enabled={true} />
+               <NextButtonEnabling action={prop.NextButtonAction} text={i18n.t('Next')} enabled={true} />
             </View>
           </>
         ) : (
-          // Если переменной NumbOfReps нет, то проверяем isActive
+
           !isActive ? (
-            <RunningExerciseButton action={stopTimer} enabled={true} title={prop.StartButtonTitle}/>
+            <View style={{flex:1, width:'100%'}} >
+              <FullOrangeButton action={stopTimer} enabled={true} text={prop.StartButtonTitle}/>
+            </View>
           ) : (
             <>
               <View style={{width: prop.FirstWidth, height: prop.FirstHeight}}>
-                <StartButtonEmpty title={prop.StartButtonTitle} enabled={true} action={startTimer}/>
+                <StartButton text={prop.StartButtonTitle} action={startTimer}/>
               </View>
               <View style={{width: prop.SecondWidth}} >
-                  <NextButtonEnablingDark action={nextButtonHandler} title='Next' enabled={nextButtonEnable} />
+                <NextButtonEnabling action={prop.NextButtonAction} text={i18n.t('Next')} enabled={true} />  
               </View>
             </>
           )

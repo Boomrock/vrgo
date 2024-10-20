@@ -26,7 +26,7 @@ export const SelectedPatology = ({ text, onPress }: ElementProps) => {
     return (
       <TouchableOpacity style={stylesSelected.container} onPress={onPress}>
         <Text style={stylesSelected.text}>{text}</Text>
-        <Image style={stylesSelected.image} source={require('@images/patology/pencil.png')}></Image>
+        <Image style={stylesSelected.image} source={require('@images/pathology/pencil.png')}></Image>
       </TouchableOpacity>
     );
 };

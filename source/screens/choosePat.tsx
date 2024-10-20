@@ -1,7 +1,8 @@
-import { NextButton, NextButtonLightWide } from '@components/buttonsComponent';
+import { FullButton} from '@components/buttonsComponent';
 import DropdownComponent from '@components/patologyDropdownComponent';
 import { NavigationContext } from '@navigations/navigate';
 import { Screens } from '@navigations/Screens';
+import i18n from '@scripts/localization/i18next';
 import { disp_width } from '@scripts/utils/Const';
 import React, { useContext, useState } from 'react';
 import { View, Text, StyleSheet } from 'react-native';
@@ -30,9 +31,10 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
         </Text>
         <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/>
         <View style={{width: disp_width * 0.9}}>
-          {selectedPathology == '' ? <></> : <NextButtonLightWide action={loadScene}/>}
+          {selectedPathology == '' ? <></> :    <FullButton text={i18n.t("Next")} action={loadScene}/>}
         </View>
       </View>
+  
     </View>
   );
 }

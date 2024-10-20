@@ -12,6 +12,7 @@ export default StyleSheet.create({
 
     backgroundColor: '#232323',
   },
+  
   textDefault: {
     color: 'white',
     fontSize: 19, //px

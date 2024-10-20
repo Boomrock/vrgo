@@ -4,8 +4,9 @@ import { StyleSheet, Text, Button, Modal, View, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { AntDesign } from '@expo/vector-icons';
 import styles from '@styles/styles';
-import { UnderstandButton } from '@components/buttonsComponent';
+import { FullButton } from '@components/buttonsComponent';
 import { DataProvider } from '@scripts/utils/DataProvider';
+import i18n from '@scripts/localization/i18next';
 
 
 interface TooltipProps { 
@@ -45,7 +46,7 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
                         />
                         <Text style={isCheckedModalWin ? {...styles.textDefault, ...{color: '#FFB800'}} : {...styles.textDefault, ...{color:'#B6FFFB'}}}>Больше не показывать</Text>
                     </View>
-                    <UnderstandButton action ={() => close()}></UnderstandButton>
+                    <FullButton action ={() => close()} text={i18n.t("Understand")}/>
                 </View>
             </View>
         </Modal>

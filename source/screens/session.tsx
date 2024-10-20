@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { BackButtonLittle, StartButtonEmpty } from '@components/buttonsComponent';
+import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
+import { BackButton, FullBackButton, FullButton} from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
 import { ClearStackAndNavigate} from '@navigations/navigate';
 import { disp_height, disp_width } from '@scripts/utils/Const';
@@ -18,6 +18,7 @@ import IntermediateScreen from '@components/intermediateScreen';
 import { ExerciseStep } from '@scripts/models/Exercise/ExerciseStep';
 import { Screens } from '@navigations/Screens';
 import { DataProvider } from '@scripts/utils/DataProvider';
+import i18n from '@scripts/localization/i18next';
 
 var sessionDefault = new Session();
 export default function SessionScreen({ navigation }: { navigation: any }) {
@@ -80,14 +81,17 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
       if (isCheckedRightLeg || isCheckedLeftLeg) affectedRegion.push("Нога")
         
     }
-
-    allExercises.forEach(element => {
+    let exerciseBlock = allExercises.find(value => value.language === i18n.t("language"));
+    if(exercise === null){
+      exerciseBlock = allExercises.find(value => value.language === 'en')
+    }
+    exerciseBlock?.exercise.forEach(element => {
       element.exercises.forEach(exercise => {
         const steps = exercise.steps.map(value => {
           return new ExerciseStep(value.instruction, value.image, value.type);
         })
 
-        let ex = new Exercise(exercise.executeTime, exercise.description, steps, exercise.perface, exercise.exerciseType, exercise.CountOfRepeat)
+        let ex = new Exercise(exercise.executeTime, exercise.description, steps, exercise.preface, exercise.exerciseType, exercise.CountOfRepeat)
 
         ex.bodyPart = element.bodyPart
         ex.pathology = element.pathology
@@ -118,6 +122,8 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   }
   const refreshRunTimeHandler = (runTime: number) => {
     setRunTime(runTime);
+    console.debug(runTime);
+    
   };
 
   const clearStackAndNavigate = () => {
@@ -191,9 +197,10 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
         <View />
 
         <View style={styles.top_navbar}>
-          <BackButtonLittle action={clearStackAndNavigate} />
+          <View>
+            <BackButton action={clearStackAndNavigate} text={''} />
+          </View>
           <ExerciseProgression currentExercise={completedExercises} totalExercises={totalExercises} />
-          
         </View>
         {isViewIntermediateScreen ? 
         (<IntermediateScreen nextButtonAction={nextExercise} totalExercises={totalExercises} completedExercises={completedExercises} /> ):
@@ -215,7 +222,11 @@ const styles = StyleSheet.create({
     backgroundColor: '#232323',
   },
   top_navbar: {
-    flexDirection: 'row',
-    alignContent: 'space-around',
+    flexDirection: 'row', // Располагаем контейнеры в ряд
+    justifyContent: "space-between", // Распределяем пространство между контейнерами
+    alignItems: 'center', // Центрируем контейнеры по вертикали
+    padding: 10,
+    marginTop: 30,
+    height: 'auto', // Задаем высоту контейнера
   },
 });

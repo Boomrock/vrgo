@@ -1,5 +1,5 @@
 import { BodypartsSelected } from "@components/bodypartsSelected";
-import { StartExercisesButton } from "@components/buttonsComponent";
+import { FullButton } from "@components/buttonsComponent";
 import DropdownComponent from "@components/patologyDropdownComponent";
 import { NavigationContext } from "@navigations/navigate";
 import { IDataProvider, Path } from "@scripts/interfaces/content-provider/IDataProvider";
@@ -7,13 +7,14 @@ import { useContext, useEffect, useState } from "react";
 import { View, Text, StyleSheet, Dimensions } from "react-native";
 import { ChoseBodyPart } from "./choosingBodyPart";
 import { getStatusBarHeight } from 'react-native-status-bar-height';
+import i18n from "@scripts/localization/i18next";
 
 const { width: disp_width } = Dimensions.get('window');
 
 export default function MainScreen({navigation}: {navigation: any}) {
     const [selectedPathology, setSelectedPathology] = useState<string>('');
     const [selectedBodyParts, setSelectedBodyParts] = useState<string[]>([]);
-    //const [isFocused, setIsFocused] = useState(false);
+
     
     const { data, setData } = useContext(NavigationContext);
     
@@ -26,55 +27,54 @@ export default function MainScreen({navigation}: {navigation: any}) {
     const loadBodyPartScene = () => {
       navigation.navigate('ChoosingBodyPart', {backScene: 'MainScreen'})
     }
-  //TEXT 
 
     var BodyParts: string[] = [];
     useEffect(()=>{
       dataProvider.Get<ChoseBodyPart>(Path.choseBodyPart)
         .then( result =>{
           if(result?.isCheckedLeftHand && result?.isCheckedRightHand){
-              BodyParts.push("Левая и правая рука");
+              BodyParts.push(i18n.t('left and right hands'));
           }
           else if(result?.isCheckedLeftHand){
-            BodyParts.push("Левая рука");
+            BodyParts.push(i18n.t('left hand'));
           }
           else if(result?.isCheckedRightHand){
-            BodyParts.push("Правая рука");
+            BodyParts.push(i18n.t('right hand'));
           }
 
         if(result?.isCheckedLeftLeg && result?.isCheckedRightLeg){
-            BodyParts.push("Левая и правая нога");
+            BodyParts.push(i18n.t('left and right legs'));
         }
         else if(result?.isCheckedLeftLeg){
-          BodyParts.push("Левая нога");
+          BodyParts.push(i18n.t('left leg'));
         }
         else if(result?.isCheckedRightLeg){
-          BodyParts.push("Правая нога");
+          BodyParts.push(i18n.t('right leg'));
         }
       setSelectedBodyParts(BodyParts);
       })
     },[])  
-    //TEXT
-
     return (
       <View style={styles.background}>
         <View style={styles.container}>
-          <Text style={{...styles.text, marginTop: getStatusBarHeight()}}> Ваша патология верна?</Text>
+          <Text style={{...styles.text, marginTop: getStatusBarHeight()}}> {i18n.t('Is your pathology correct?')}</Text>
           <View style={{position: 'absolute', top: getStatusBarHeight() + 30, zIndex: 10}}>
           <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}></DropdownComponent>
           </View>
-          <View style={{flex: 1, marginTop: '15%', width: disp_width - sideMargin*2}}>
-            <Text style={styles.text}> Верны ли области упражнений?</Text>
-            <View style={{height: 200}}>
+          <View style={{flex: 1, marginTop: '15%', width: disp_width - sideMargin * 2}}>
+            <Text style={styles.text}> {i18n.t('Are the areas of exercises correct?')}</Text>
+            <View style={{height: 100}}>
               <BodypartsSelected bodyparts={selectedBodyParts} onPress={loadBodyPartScene}></BodypartsSelected>
             </View>
           </View>
-          <StartExercisesButton
-            action={loadExerciseScene}
-          />
+          <FullButton
+            text={i18n.t("Start exercising")}
+            action={loadExerciseScene}/>
         </View>
       </View>
     );
+
+
 }
 
 const sideMargin = 16;

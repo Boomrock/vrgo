@@ -7,7 +7,7 @@ interface Props {
 
 const ExerciseProgression: React.FC<Props> = ({ currentExercise, totalExercises }) => {
     return (
-        <View style={styles.container}>
+    <View style={styles.container}>
       <Text style={styles.fractionText}>{currentExercise} / {totalExercises}</Text>
     </View>
   );
@@ -15,11 +15,6 @@ const ExerciseProgression: React.FC<Props> = ({ currentExercise, totalExercises 
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
-    alignItems: 'flex-end',
-    padding: 20,
-    alignSelf: 'flex-end',
-    flex: 1
   },
   fractionText: {
     color: '#B6FFFB',

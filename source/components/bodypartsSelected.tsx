@@ -14,7 +14,7 @@ export const BodypartsSelected = ({ bodyparts, onPress }: ElementProps) => {
                         <Text style={styles.text} key={index}>{item}</Text>
                     ))}
         </View>
-        <Image style={styles.image} source={require('@images/patology/pencil.png')}/>
+        <Image style={styles.image} source={require('@images/pathology/pencil.png')}/>
       </TouchableOpacity>
     );
 };

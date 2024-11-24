@@ -57,7 +57,6 @@ function ExerciseComponent(prop: Prop) {
 
   const findIndexInMap = (valueToFind: number): number => {
     let index = 0;
-    console.debug(instructionToImage);
     for (let value of instructionToImage.values()) {
       if (value === valueToFind) {
         return index;
@@ -69,7 +68,6 @@ function ExerciseComponent(prop: Prop) {
 
   const imageIndex = (instructionIndex: number) => {
     const imageIndex = findIndexInMap(instructionIndex);
-    console.debug(`${instructionIndex} -> ${imageIndex}`);
     if (imageIndex === -1) {
       return slickRef.current?.state.index;
     }

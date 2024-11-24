@@ -18,6 +18,6 @@ i18n.translations = {
 i18n.enableFallback = true;
 
 // Устанавливаем язык приложения на основе языка устройства
-i18n.locale = 'en';
+i18n.locale = Localization.getLocales()[0].languageTag;
 
 export default i18n;

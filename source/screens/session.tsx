@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet, Text, SafeAreaView } from 'react-native';
+import { View, StyleSheet, Text, SafeAreaView, BackHandler } from 'react-native';
 import { BackButton, FullBackButton, FullButton} from '@components/buttonsComponent';
 import ExerciseComponent from '@components/exerciseComponent';
 import { ClearStackAndNavigate} from '@navigations/navigate';
@@ -19,6 +19,7 @@ import { ExerciseStep } from '@scripts/models/Exercise/ExerciseStep';
 import { Screens } from '@navigations/Screens';
 import { DataProvider } from '@scripts/utils/DataProvider';
 import i18n from '@scripts/localization/i18next';
+import ExitChoice from '@components/Modal/ExitChoice';
 
 var sessionDefault = new Session();
 export default function SessionScreen({ navigation }: { navigation: any }) {
@@ -28,8 +29,10 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
   var [exercise, setExercise] = useState(Exercise.emptyExercise);
   var [completedExercises, setCompletedExercises] = useState(0);
   var [totalExercises, setTotalExercises] = useState(0);
-  var [savedChoseModalVisible, setSavedChoseModalVisible] = useState(false);
-  const [isViewIntermediateScreen, setIsViewIntermediateScreen ] = useState(false);
+  var [savedChoseModalVisible, setSavedChoseModalVisible] = useState(true);
+  const [isViewIntermediateScreen, setIsViewIntermediateScreen] = useState(false);
+  const [instructionModal, setInstructionModal] = useState(true);
+  const [exitChoiceModal, setExitChoiceModal] = useState(false);
 
 
   const {data, setData} = useContext(NavigationContext);
@@ -49,16 +52,30 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
     dataProvider.Get<boolean>(Path.sessionChooseModal).then( 
       choose =>{
         if(choose){
+          console.debug(choose)
           setSavedChoseModalVisible(choose);
         }
         else{
           setSavedChoseModalVisible(false);
         }
+    }).catch(()=>{
+      setSavedChoseModalVisible(false);  
     })
 
 
     fetchData().then(processExercises).then(initSession)
-    },[])
+
+    const backPressHandler = () => {
+      setExitChoiceModal(true);
+      return true;
+    }
+    const backHandler = BackHandler.addEventListener(
+      "hardwareBackPress",
+      backPressHandler
+    );
+
+    return () => backHandler.remove(); // Удаляем обработчик при размонтировании
+  }, []);
 
   const fetchData = async () => {
     const [pathologyResult, bodyPartResult] = await Promise.all([
@@ -82,9 +99,10 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
         
     }
     let exerciseBlock = allExercises.find(value => value.language === i18n.t("language"));
-    if(exercise === null){
+    if(exerciseBlock === null){
       exerciseBlock = allExercises.find(value => value.language === 'en')
     }
+
     exerciseBlock?.exercise.forEach(element => {
       element.exercises.forEach(exercise => {
         const steps = exercise.steps.map(value => {
@@ -95,10 +113,11 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
 
         ex.bodyPart = element.bodyPart
         ex.pathology = element.pathology
-
+        
         exercises.push(ex)
       })
     });
+
   };
 
   const processExercises = () => {
@@ -106,48 +125,39 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
     let selectorBuilder = new ExerciseSelectorBuilder()
     if (affectedRegion.length != 0 && pathology != null) {
       let selector = selectorBuilder.AddAffectedRegion(affectedRegion).AddPathology(pathology).Build()
+
       selector.Select(exercises).forEach(exercise => {
-        console.debug(exercise)
         session!.enqueue(exercise)
       });
     }
   };
 
   const initSession = () => {
-    setTotalExercises(session!.getQueueLength());
-    setCompletedExercises(0);
-
-    let ex = session!.dequeue();
-    setExercise(ex!);
+    setTotalExercises(session!.getTotalCountExercise());
+    session!.dequeue();
   }
   const refreshRunTimeHandler = (runTime: number) => {
     setRunTime(runTime);
-    console.debug(runTime);
-    
   };
 
   const clearStackAndNavigate = () => {
     ClearStackAndNavigate(navigation, Screens.MainScreen);
   };
-  //TEXT
-  const text_1: string = "Желательно выполнять под присмотром или с тростью \n После ознакомления с инструкцией нажмите 'старт'";
-  const [modalWindow, setModalWindow] = useState(true);
-  const toggleModal = () => {
-    setModalWindow(!modalWindow);
-  };
+  const text_1: string = i18n.t("Exrcise Instruction");
+
   const nextExercise = () => { 
     session!.dequeue();
     setIsViewIntermediateScreen(false);
   }
   const refreshExerciseHandler = () => {
     setExercise(session!.currentExercise!)
-    setCompletedExercises(i => i + 1);
+    setCompletedExercises(session.getTotalCountExercise() - session.getQueueLength());
   }
 
   const numberToTime = (runTime: number): string => {
     const totalSeconds = Math.ceil(runTime / 1000);
 
-    if(totalSeconds <= 0) return `Start`;
+    if(totalSeconds <= 0) return i18n.t('Start');
 
     const minutes = Math.floor(totalSeconds / 60);
     const seconds = totalSeconds % 60;
@@ -183,22 +193,39 @@ export default function SessionScreen({ navigation }: { navigation: any }) {
       tooltipProps.emitter =  session!.emitter;
     }
   }
+  const backButtonAction = () => {
+    setExitChoiceModal(true);
+    
+  }
+  function exit() {
+    session!.clear()
+    clearStackAndNavigate();
+  }
+
   //TEXT
   return (
     <>
       <View style={styles.container}>
         <TooltipWin
-          modalWindow={modalWindow && !savedChoseModalVisible}
-          textHead='Инструкция'
+          modalWindow={instructionModal && !savedChoseModalVisible}
+          textHead= {i18n.t('Instruction')}
           textBody={text_1}
-          toggleModal={toggleModal}
+          toggleModal={()=>setInstructionModal(false)}
           checkBoxChange={checkBoxChange}
-        />
-        <View />
+          />
+        <ExitChoice 
+          modalWindow={exitChoiceModal}
+          header= {i18n.t('What do you want to do')}
+          textBut1={i18n.t('To the main screen')}
+          textBut2={i18n.t('One step back')}
+          action1={()=>{exit()}}
+          action2={()=>{session.back();}}
+          toggleModal={()=>setExitChoiceModal(false)}
+          />
 
         <View style={styles.top_navbar}>
           <View>
-            <BackButton action={clearStackAndNavigate} text={''} />
+            <BackButton action={backButtonAction} text={''} />
           </View>
           <ExerciseProgression currentExercise={completedExercises} totalExercises={totalExercises} />
         </View>

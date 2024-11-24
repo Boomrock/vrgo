@@ -3,6 +3,8 @@
     "right hand": "right hand",
     "left leg": "left leg",
     "right leg": "right leg",
+    "Do not show again":"Do not show again",
+    "Start entering the pathology or impairment necessary for physiotherapy": "Start entering the pathology or impairment necessary for physiotherapy",
     "left and right hands": "left and right hands",
     "left and right legs": "left and right legs",
     "Is your pathology correct?": "Is your pathology correct?",
@@ -42,9 +44,12 @@
 
     "Modal instructions for selecting a Body Part":
     "You need to click on those parts of the avatar where you have violations. \nYou will be offered to work with these areas through exercises. You can always change them by returning to the appropriate screen.",
-
-    "Intruction": "Intruction",
-
+    "Ups!": "Ups!",
+    "What do you want to do":"What do you want to do?",
+    "To the main screen":"To the main screen",
+    "One step back":"One step back",
+    "Instruction": "Intruction",
+    "Exrcise Instruction": "It is advisable to do this under supervision or with a cane. \n After reading the instructions, press 'start'",
     "Exercises completed":"exercises completed",
     "Take a break": "Take a break to recover between exercises",
     "Break":"Break",

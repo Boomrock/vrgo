@@ -13,6 +13,7 @@ export class Session {
     public get currentExercise() { return this._currentExercise; }
 
     private _exerciseQueue: Exercise[] = [];
+    private _history: Exercise[] = []; 
     private _timer: Timer;
     private _currentExercise: Exercise | null = null;
     private _intervalID: NodeJS.Timeout | null = null;
@@ -27,10 +28,14 @@ export class Session {
     clear():void{
         this._exerciseQueue = [];
         this._intervalID = null;
+        this._history = [];
+        this._timer.stop();
+        this._intervalID = null;
+
     }
-    // Добавление упражнения в очередь
-    enqueue(exercise: Exercise): void {
-        this._exerciseQueue.push(exercise);
+
+    getTotalCountExercise(): number {
+        return this._exerciseQueue.length + this._history.length;
     }
 
     getQueueLength(): number {
@@ -57,27 +62,37 @@ export class Session {
             this.emitter.emit(SessionEvent.refreshRunTimeNotify, this.runtime);
         }
     }
-
+    // Добавление упражнения в очередь
+    enqueue(exercise: Exercise): void {
+        this._exerciseQueue.push(exercise);
+    }
+    // Извлечение
     dequeue(): Exercise | null {
         if (this._exerciseQueue.length === 0) {
             this.close();
-            console.log("сессия не было упражений Session:start");
+            console.error("сессия не было упражений Session:start");
             return null;
         }
+
+        if (this._currentExercise?.exerciseType === ExerciseType.TIMER) {
+            this._timer.stop();
+        }
+
         const exercise = this._exerciseQueue.shift()!;
         if (exercise != null) {
             this._currentExercise = exercise;
         }
 
+
         if (this.start()) {
             this.emitter.emit(SessionEvent.refreshExerciseNotify, this._currentExercise);
+            this._history.push(this._currentExercise!);
             return this._currentExercise;
         }
         return null;
     }
 
     private start(): boolean {
-
         this.executeExercise();
         return true;
     }
@@ -89,6 +104,25 @@ export class Session {
         }
         this._exerciseQueue = [];
         this.emitter.emit(SessionEvent.closeSessionNotify, this._currentExercise);
+    }
+
+    back():Exercise | null {
+        if(this._history.length <= 1){
+            return null
+        }
+
+        let currentExercise = this._history.pop();
+        let lastExercise = this._history.pop();
+
+        if(lastExercise == null){
+            this._history.push(currentExercise!);
+            return null
+        }
+        
+        this._exerciseQueue.unshift(currentExercise!);
+        this._exerciseQueue.unshift(lastExercise);
+        return this.dequeue();
+
     }
 
     private executeExercise(): void {

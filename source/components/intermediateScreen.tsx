@@ -52,7 +52,7 @@ const IntermediateScreen: React.FC<IntermediateScreenProps> = ({ nextButtonActio
         <Text style ={{...styles.textTitle, color:'#fff', marginTop: 40}}>{i18n.t("Break")}</Text>
         <Text style ={{...styles.textDefault, color:'#fff', fontSize: 18, margin: 10, marginRight: 0 }}>{i18n.t("Take a break")}</Text>
         <Text style ={{...styles.textTitle, color:'#fff', margin: 10}}>{time} {i18n.t("Remaining")}</Text>
-        <Text style ={{...styles.textDefault, color:'#B6FFFB', fontSize: 18, margin: 10, marginRight: 0 }}>{executeExerciseCount}/{allExerciseCount} i18n.t("Exercises completed")</Text>
+        <Text style ={{...styles.textDefault, color:'#B6FFFB', fontSize: 18, margin: 10, marginRight: 0 }}>{executeExerciseCount}/{allExerciseCount} {i18n.t("Exercises completed")}</Text>
       </View>
       <FullButton action={nextExercise} text={i18n.t('Next')}/>
     </View>

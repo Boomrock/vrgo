@@ -27,7 +27,7 @@ export default function ChoosePat({ navigation }: { navigation: any }) {
       <View style={styles.container}>
         <Text style={styles.guideText}>
           
-          Начните вводить патологию или нарушение необходимое к физиотерапии
+          {i18n.t("Start entering the pathology or impairment necessary for physiotherapy")}
         </Text>
         <DropdownComponent onSelect={setSelectedPathology} dataProvider={dataProvider}/>
         <View style={{width: disp_width * 0.9}}>

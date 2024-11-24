@@ -579,7 +579,7 @@ export const allExercises = [
     },
     {
         language: 'en',
-        exercise:[
+        exercise: [
             {
                 pathology: Pathology.Stroke,
                 bodyPart: BodyPart.LEG,

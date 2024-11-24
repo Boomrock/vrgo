@@ -14,6 +14,13 @@ const dataFromJson = [ // Здесь мы берем откуда-то масс�
   { label: i18n.t(Pathology.MultipleSclerosis), value: '4' },
   { label: i18n.t(Pathology.CerebralPalsy), value: '5' }];
 
+  const pathologyDictionary: Item[] = [
+    { value: '1', label: Pathology.Stroke },
+    { value: '2', label: Pathology.BrainInjury },
+    { value: '3', label: Pathology.SpinalCordInjury },
+    { value: '4', label: Pathology.MultipleSclerosis },
+    { value: '5', label: Pathology.CerebralPalsy }
+];
   const NoPatology = {label: i18n.t('My pathology is not listed'), value: '0'};
 
   const data = [...dataFromJson, NoPatology];
@@ -35,7 +42,8 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
     const [isFocused, setIsFocused] = useState(false); // Фокус ввода текста
     useEffect(()=>{
       dataProvider.Get<Item>(Path.pathology).then(result=> {
-          setSelectedItem(result);
+          let item = dataFromJson.find(el => el.value === result?.value)
+          setSelectedItem(item);
       })
     }, []);
     const filterData = (text: string) => {
@@ -60,8 +68,8 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
         setFilteredData(data); 
         //
         setSelectedItem(selectedItem);
-
-        dataProvider.Set(selectedItem, Path.pathology);
+        let patology = pathologyDictionary.find(element => element.value === selectedItem.value);
+        dataProvider.Set(patology , Path.pathology);
         
         setIsFocused(false);
       }

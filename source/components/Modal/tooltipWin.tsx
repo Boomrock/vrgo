@@ -4,9 +4,11 @@ import { StyleSheet, Text, Button, Modal, View, Dimensions} from 'react-native';
 import Checkbox from 'expo-checkbox';
 import { AntDesign } from '@expo/vector-icons';
 import styles from '@styles/styles';
-import { FullButton } from '@components/buttonsComponent';
+import { Cross, FullButton } from '@components/buttonsComponent';
 import { DataProvider } from '@scripts/utils/DataProvider';
 import i18n from '@scripts/localization/i18next';
+import { ParagraphRenderer } from './ModalUtils';
+import ModalStyles from './ModalStyle';
 
 
 interface TooltipProps { 
@@ -29,22 +31,22 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
     return(
         <Modal
         visible={modalWindow}
-        transparent={true}
-       
-        >
-            <View style={CustomStyles.centeredView}>
-                <View 
-                style={CustomStyles.modalView}>
+        transparent={true}>
+            <View style={ModalStyles.centeredView}>
+                <View style={ModalStyles.modalView}>
+                <View style={ModalStyles.close}><Cross action={toggleModal}/></View>
+
                     <Text style={{...styles.textTitle, ...styles.textModalWindow}}>{textHead}</Text>
-                    <Text style={{...styles.textDefault, ...styles.textModalWindow}}>{textBody}</Text>
-                    <View style={CustomStyles.row}>
+                    {ParagraphRenderer.renderParagraphs(textBody,{...styles.textDefault, ...styles.textModalWindow})}
+                    
+                    <View style={ModalStyles.checkBoxRow}>
                         <Checkbox
-                            style={CustomStyles.checkbox}
+                            style={ModalStyles.checkbox}
                             value={isCheckedModalWin}
-                            onValueChange={b => {checkBoxChange(b);setCheckedModalWin(b);}}
+                            onValueChange={value => {checkBoxChange(value); setCheckedModalWin(value);}}
                             color={isCheckedModalWin ? '#FFB800' : undefined}
                         />
-                        <Text style={isCheckedModalWin ? {...styles.textDefault, ...{color: '#FFB800'}} : {...styles.textDefault, ...{color:'#B6FFFB'}}}>Больше не показывать</Text>
+                        <Text style={isCheckedModalWin ? {...styles.textDefault, ...{color: '#FFB800'}} : {...styles.textDefault, ...{color:'#B6FFFB'}}}>{i18n.t("Do not show again")}</Text>
                     </View>
                     <FullButton action ={() => close()} text={i18n.t("Understand")}/>
                 </View>
@@ -53,50 +55,3 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
         
     )
 }
-
-const CustomStyles = StyleSheet.create({
-    row: {
-        flexDirection: "row",
-        justifyContent: 'flex-start',
-        alignItems: 'center',
-        alignSelf: 'flex-start',
-        marginTop:5,
-      },
-    close:{
-        alignSelf: 'flex-end',
-        top: 5,
-        right: 5,
-        position: 'absolute',
-    },
-    checkbox: {
-        margin: 8,
-      },
-    centeredView: {
-        flex: 1,
-
-        justifyContent: 'center',
-        alignItems: 'center',
-        backgroundColor: "rgba(35, 35, 35, 0.7)",
-    },
-    modalView: {
-        width: (Dimensions.get('window').width) * 0.9,
-        backgroundColor: '#93949A',
-        borderRadius: 8,
-        margin: 10,
-        padding: 10,
-        shadowColor: '#000',
-        shadowOffset: {
-          width: 0,
-          height: 2,
-        },
-        shadowOpacity: 0.25,
-        shadowRadius: 4,
-        elevation: 5,
-    },
-    container: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'rgba(0,0,0,0.5)',
-    },
-})

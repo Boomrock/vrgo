@@ -57,9 +57,6 @@ export default function SessionTooltips(prop: tooltipProp) {
         }
     const nextButtonHandler =()=>{
       if(!nextButtonEnable){
-        
-        if(!timerRunning) return;
-        
         setTimerExerciseModalVisible(true);
         return;
       }
@@ -75,7 +72,7 @@ export default function SessionTooltips(prop: tooltipProp) {
 
         {prop.NumbOfReps && <OneButtonWin modalWindow = {countExerciseModalVisible} textHead = {i18n.t('Do times').replace("{Count}", prop.NumbOfReps!.toString())} textBody = {textBodyModal} toggleModal ={() => setCountExerciseModalVisible(false)}/>}
         <Clarification 
-        isVisibleWindow = {timerExerciseModalVisible && timerRunning} 
+        isVisibleWindow = {timerExerciseModalVisible} 
         //TEXT
         header={i18n.t('Ups!')}  
         body={i18n.t("Repeat timer exercise")} 
@@ -107,7 +104,7 @@ export default function SessionTooltips(prop: tooltipProp) {
                 <StartButton text={prop.StartButtonTitle} action={startTimer}/>
               </View>
               <View style={{width: prop.SecondWidth}} >
-                <NextButtonEnabling action={prop.NextButtonAction} text={i18n.t('Next')} enabled={true} />  
+                <NextButtonEnabling action={prop.NextButtonAction} disableAction={nextButtonHandler} text={i18n.t('Next')} enabled={nextButtonEnable} />  
               </View>
             </>
           )

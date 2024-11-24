@@ -25,7 +25,7 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
   const [isCheckedModalWin, setCheckedModalWin] = useState(false);
 
   const [modalWindow, setModalWindow] = useState(true);
-  const [savedChoseModalVisible, setSavedChoseModalVisible] = useState(false);
+  const [savedChoseModalVisible, setSavedChoseModalVisible] = useState(true);
   
   // Логические выражения поврежденных частей тела:
   const [isCheckedRightHand, CheckRightHand] = useState(false);
@@ -53,6 +53,8 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
         else{
           setSavedChoseModalVisible(false);          
         }
+    }).catch(()=>{
+      setSavedChoseModalVisible(false);  
     })
   },[])
   const loadScene = () => {
@@ -82,8 +84,8 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
       
       <View style={{marginTop: '10%', marginBottom:8}}>
         <InfoButton action={() => setCheckedModalWin(true)} text={i18n.t('View hint')}/>
-        <TooltipWin modalWindow = {modalWindow && !savedChoseModalVisible} textHead = {i18n.t('Intruction')} textBody = {text_1} toggleModal = {toggleModal} checkBoxChange={checkBoxChange}/>
-        <OneButtonWin modalWindow = {isCheckedModalWin} textHead = {i18n.t('Intruction')} textBody = {text_2} toggleModal = {toggleModal2} />
+        <TooltipWin modalWindow = {modalWindow && !savedChoseModalVisible} textHead = {i18n.t('Instruction')} textBody = {text_1} toggleModal = {toggleModal} checkBoxChange={checkBoxChange}/>
+        <OneButtonWin modalWindow = {isCheckedModalWin} textHead = {i18n.t('Instruction')} textBody = {text_2} toggleModal = {toggleModal2} />
       </View>
 
       <View style={styles.row}>
@@ -124,10 +126,10 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
       </View>
       <View style={styles.btnContainer} >
         <View style={{flex: 34, marginBottom: '2%'}}>
-          <BackButton action={loadScene}  text={i18n.t("Back")}/>
+          <BackButton action={loadScene}  text={i18n.t("Back")} rightCorner = {false}/>
         </View>
         <View style={{flex: 66, marginBottom: '2%', marginLeft: 5}}>
-          <NextButtonEnabling action={loadMainScene} text='Next' enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)}/>
+          <NextButtonEnabling action={loadMainScene} text={i18n.t('Next')} enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)}/>
         </View>
       </View>
       <View style={styles.bodypartsview}>

@@ -68,8 +68,9 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
       isCheckedRightLeg: isCheckedRightLeg,
       isCheckedLeftLeg: isCheckedLeftLeg,
     };
-    dataProvider.Set(chose, Path.choseBodyPart);
-    ClearStackAndNavigate(navigation, Screens.MainScreen)
+    dataProvider.Set(chose, Path.choseBodyPart).then(()=>{
+      ClearStackAndNavigate(navigation, Screens.MainScreen);
+    })
   }
   const checkBoxChange = (arg: boolean) => {
     dataProvider.Set<boolean>(arg, Path.choosingBodyPartChooseModal);

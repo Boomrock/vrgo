@@ -1,15 +1,17 @@
 import React from "react";
-import { Image, View, Text, StyleSheet, TouchableOpacity, Pressable } from "react-native";
+import { Image, View, Text, StyleSheet, TouchableOpacity, Pressable} from "react-native";
 import styles from "@styles/styles";
-import { opacity } from "react-native-reanimated/lib/typescript/reanimated2/Colors";
-import { TouchableWithoutFeedback } from "react-native-gesture-handler";
+
 
 
 interface ButtonProps {
     action: () => void;
     text?: string;
-    enabled?: boolean
+    enabled?: boolean,
   }
+interface StyledButtonInterface extends ButtonProps{
+  externalStyles: any
+}
 interface BackButtonProps extends  ButtonProps{
   rightCorner?: boolean
 }
@@ -108,11 +110,12 @@ interface ParentButtonProps{
       </View>
     );
   };
-  export const Cross:  React.FC<ButtonProps> = ({action, enabled}) =>{
+  export const Cross:  React.FC<StyledButtonInterface> = ({action, enabled, externalStyles}) =>{
+
     return(
-        <TouchableOpacity onPress={action} style={buttonStyles.container}>
+        <Pressable onPress={()=>{action()}} style={{...buttonStyles.container,  ...externalStyles}}>
             <Image source={require("@images/button/X.png")} style ={buttonStyles.imageCross}/>
-        </TouchableOpacity>
+        </Pressable>
     )
   }
   const OrangeButton: React.FC<ParentButtonProps> = ({action, text, rightCorner, leftCorner, leftImage, rightImage, enabled}) => {

@@ -30,30 +30,33 @@ export default function MainScreen({navigation}: {navigation: any}) {
 
     var BodyParts: string[] = [];
     useEffect(()=>{
-      dataProvider.Get<ChoseBodyPart>(Path.choseBodyPart)
-        .then( result =>{
-          if(result?.isCheckedLeftHand && result?.isCheckedRightHand){
-              BodyParts.push(i18n.t('left and right hands'));
-          }
-          else if(result?.isCheckedLeftHand){
-            BodyParts.push(i18n.t('left hand'));
-          }
-          else if(result?.isCheckedRightHand){
-            BodyParts.push(i18n.t('right hand'));
-          }
+      const updateBodyParts = () => {
+          dataProvider.Get<ChoseBodyPart>(Path.choseBodyPart)
+            .then( result =>{
+              if(result?.isCheckedLeftHand && result?.isCheckedRightHand){
+                  BodyParts.push(i18n.t('left and right hands'));
+              }
+              else if(result?.isCheckedLeftHand){
+                BodyParts.push(i18n.t('left hand'));
+              }
+              else if(result?.isCheckedRightHand){
+                BodyParts.push(i18n.t('right hand'));
+              }
 
-        if(result?.isCheckedLeftLeg && result?.isCheckedRightLeg){
-            BodyParts.push(i18n.t('left and right legs'));
-        }
-        else if(result?.isCheckedLeftLeg){
-          BodyParts.push(i18n.t('left leg'));
-        }
-        else if(result?.isCheckedRightLeg){
-          BodyParts.push(i18n.t('right leg'));
-        }
-      setSelectedBodyParts(BodyParts);
-      })
-    },[])  
+            if(result?.isCheckedLeftLeg && result?.isCheckedRightLeg){
+                BodyParts.push(i18n.t('left and right legs'));
+            }
+            else if(result?.isCheckedLeftLeg){
+              BodyParts.push(i18n.t('left leg'));
+            }
+            else if(result?.isCheckedRightLeg){
+              BodyParts.push(i18n.t('right leg'));
+            }
+          setSelectedBodyParts(BodyParts);
+          })
+      }
+      updateBodyParts();
+    }, []); 
     return (
       <View style={styles.background}>
         <View style={styles.container}>

@@ -108,7 +108,7 @@ function ExerciseComponent(prop: Prop) {
               val.image !== undefined && (
                 <Image
                   key={ind}
-                  style={{ height: disp_height * 0.35, width: disp_width - 32 }}
+                  style={{ height: disp_height * 0.35, width: disp_width - 32, resizeMode: 'contain',}}
                   source={val.image}
                 />
               )

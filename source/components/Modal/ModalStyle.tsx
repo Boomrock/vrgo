@@ -6,6 +6,7 @@ export const ModalStyles = StyleSheet.create({
         top: 5,
         right: 5,
         position: 'absolute',
+        zIndex: 10
     },
     checkbox: {
         margin: 8,

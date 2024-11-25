@@ -23,7 +23,9 @@ export default function OneButtonWin({modalWindow, textHead, textBody, toggleMod
     const [isCheckedModalWin, setCheckedModalWin] = useState(false);
 
     const close = () => {
+        console.log("close")
         toggleModal();
+
       }
 
     return(
@@ -33,10 +35,10 @@ export default function OneButtonWin({modalWindow, textHead, textBody, toggleMod
         >
             <View style={ModalStyles.centeredView}>
                 <View style={ModalStyles.modalView}>
-                    <View style={ModalStyles.close}><Cross action={toggleModal}/></View>
-
+                    <Cross action={close} externalStyles={ModalStyles.close}/>
                     <View style={{width: '100%'}}>
                         <Text style={{...styles.textTitle, ...styles.textModalWindow}}>{textHead}</Text>
+
                         {ParagraphRenderer.renderParagraphs(textBody, {...styles.textDefault, ...styles.textModalWindow, marginBottom: 10})}
                         <FullButton action ={() => close()} text={i18n.t("Understand")}/>
                     </View>

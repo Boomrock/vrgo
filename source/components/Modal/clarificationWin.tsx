@@ -24,7 +24,7 @@ export default function Clarification({isVisibleWindow: modalWindow, header, bod
            transparent={true}>
                 <View style={ModalStyles.centeredView}>
                     <View style={ModalStyles.modalView}>
-                        <View style={ModalStyles.close}><Cross action={toggleModal}/></View>
+                        <Cross action={toggleModal} externalStyles={ModalStyles.close}/>
 
                         <View>
                             <Text style={styles.textTitle}>{header}</Text>

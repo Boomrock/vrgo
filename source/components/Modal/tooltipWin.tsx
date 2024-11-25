@@ -34,7 +34,7 @@ export default function TooltipWin({modalWindow, textHead, textBody, toggleModal
         transparent={true}>
             <View style={ModalStyles.centeredView}>
                 <View style={ModalStyles.modalView}>
-                <View style={ModalStyles.close}><Cross action={toggleModal}/></View>
+                <Cross action={toggleModal} externalStyles={ModalStyles.close}/>
 
                     <Text style={{...styles.textTitle, ...styles.textModalWindow}}>{textHead}</Text>
                     {ParagraphRenderer.renderParagraphs(textBody,{...styles.textDefault, ...styles.textModalWindow})}

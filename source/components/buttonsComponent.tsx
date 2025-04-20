@@ -40,9 +40,13 @@ interface ParentButtonProps{
       <SimpleButton action={action} text={text} enabled = { enabled} rightCorner={true} leftCorner={true} leftImage={require("@images/button/CaretLeft.png")} />
     );
   };
-  export const StartButton: React.FC<ButtonProps> = ({action, text}) => {
+  export const StartButton: React.FC<ButtonEnabledProps> = ({action, text, disableAction = () => {}, enabled = true}) => {
     return (
-      <SimpleButton action={action} text={text} enabled = {true} rightCorner={false} leftCorner={true} leftImage={require("@images/button/Eject.png")} />
+      enabled ? (
+        <SimpleButton action={action} text={text}  enabled = {enabled} rightCorner={false} leftCorner={true} leftImage={require("@images/button/Eject.png")} />
+      ):(
+        <WhiteTransparentButton disableAction={disableAction} enabled={enabled} text={text} rightCorner={false} leftCorner={true} leftImage={require("@images/button/EjectSimple.png")} />     
+      )
     );
   }
   export const FullOrangeButton: React.FC<ButtonProps> = ({action, text}) => {
@@ -65,6 +69,14 @@ interface ParentButtonProps{
       enabled ?
         (<SimpleButton action={action} text={text} leftCorner={false}  rightCorner={true}  rightImage={require("@images/button/CaretRight.png")} />) :
         (<WhiteTransparentButton disableAction={disableAction} enabled={enabled} text={text} leftCorner={false}  rightCorner={true}  rightImage={require("@images/button/CaretWhiteRight.png")} />)
+      
+    );
+  }
+  export const FullNextButtonEnabling: React.FC<ButtonEnabledProps> = ({action, text, enabled, disableAction}) =>{
+    return (
+      enabled ?
+        (<SimpleButton action={action} text={text} leftCorner={true}  rightCorner={true}  rightImage={require("@images/button/CaretRight.png")} />) :
+        (<WhiteTransparentButton disableAction={disableAction} enabled={enabled} text={text} leftCorner={true}  rightCorner={true}  rightImage={require("@images/button/CaretWhiteRight.png")} />)
       
     );
   }
@@ -221,6 +233,7 @@ interface ParentButtonProps{
     centralBlock: {
       flex:1,
       padding: 10,
+      minHeight: 50,
       flexDirection: 'row', 
       alignItems: 'center',
       justifyContent: 'center',
@@ -229,6 +242,8 @@ interface ParentButtonProps{
     transparentCentralBlock: {
       flex:1,
       padding: 10,
+      minHeight: 50,
+
       flexDirection: 'row', 
       alignItems: 'center',
       justifyContent: 'center',

@@ -1,11 +1,12 @@
 import { Exercise } from "@scripts/models/Exercise/Exercise";
 
 export enum Pathology {
+    PathologyNotListed = 'My pathology is not listed', 
     Stroke = 'Stroke',
     BrainInjury = 'BrainInjury',
     SpinalCordInjury = 'SpinalCordInjury',
     MultipleSclerosis = 'MultipleSclerosis',
-    CerebralPalsy = 'CerebralPalsy'//"traumaticBrainInjury"
+    CerebralPalsy = 'CerebralPalsy'
 }
 
 export enum BodyPart {
@@ -186,11 +187,11 @@ export const allExercises = [
                         steps: [
                             {
                                 instruction: 'Поднимите одну ногу, не сгибая в коленях',
-                                image: require('@images/pathology/Lifting straight legs 1.png')
+                                image: require('@images/pathology/Lifting straight legs 1 (2).png')
                             },
                             {
                                 instruction: 'Когда нога окажется максимально высоко, задержитесь на несколько секунд',
-                                image: require('@images/pathology/Lifting straight legs 2.png')
+                                image: require('@images/pathology/Lifting straight legs 2 (2).png')
                             },
                             {
                                 instruction: 'Опустите ногу и чередуйте с другой ногой',
@@ -832,11 +833,11 @@ export const allExercises = [
                         steps: [
                             {
                                 instruction: 'Lift the other leg, trying not to bend it',
-                                image: require('@images/pathology/Lifting straight legs 1.png')
+                                image: require('@images/pathology/Lifting straight legs 1 (2).png')
                             },
                             {
                                 instruction: 'Do 3 sets of 10 repetitions for each leg',
-                                image: require('@images/pathology/Lifting straight legs 2.png')
+                                image: require('@images/pathology/Lifting straight legs 2 (2).png')
                             },
                             {
                                 instruction: 'Be sure to keep your knee completely straight by tightening your thigh muscles',

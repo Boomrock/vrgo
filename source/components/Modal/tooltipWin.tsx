@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { useState } from 'react';
-import { StyleSheet, Text, Button, Modal, View, Dimensions} from 'react-native';
+import { Text, Modal, View} from 'react-native';
 import Checkbox from 'expo-checkbox';
-import { AntDesign } from '@expo/vector-icons';
 import styles from '@styles/styles';
 import { Cross, FullButton } from '@components/buttonsComponent';
-import { DataProvider } from '@scripts/utils/DataProvider';
 import i18n from '@scripts/localization/i18next';
 import { ParagraphRenderer } from './ModalUtils';
 import ModalStyles from './ModalStyle';

@@ -70,7 +70,7 @@ export class Session {
     dequeue(): Exercise | null {
         if (this._exerciseQueue.length === 0) {
             this.close();
-            console.error("сессия не было упражений Session:start");
+            console.log("В сессия не было упражений Session:dequeue");
             return null;
         }
 

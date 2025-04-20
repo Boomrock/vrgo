@@ -11,12 +11,12 @@ interface TooltipProps {
     body:string;
     agreeHandler: () => void;
     disagreeHandler: () => void;
-    textBut1:string;
-    textBut2:string;
+    agreeButton:string;
+    disagreeButton:string;
     toggleModal: () => void
 }
 
-export default function Clarification({isVisibleWindow: modalWindow, header, body, textBut1, textBut2, agreeHandler, disagreeHandler, toggleModal} : TooltipProps): React.ReactElement<TooltipProps> {
+export default function Clarification({isVisibleWindow: modalWindow, header, body, agreeButton, disagreeButton, agreeHandler, disagreeHandler, toggleModal} : TooltipProps): React.ReactElement<TooltipProps> {
 
     return(
         <Modal
@@ -30,9 +30,9 @@ export default function Clarification({isVisibleWindow: modalWindow, header, bod
                             <Text style={styles.textTitle}>{header}</Text>
                             {ParagraphRenderer.renderParagraphs(body, {...styles.textDefault, ...styles.textModalWindow})}
                             <View style={{marginVertical:10}}>
-                                <FullTransparentButton action={() => disagreeHandler()} text={textBut1}/>
+                                <FullTransparentButton action={() => disagreeHandler()} text={disagreeButton}/>
                             </View>
-                            <FullButton action={() => agreeHandler()} text={textBut2} />
+                            <FullButton action={() => agreeHandler()} text={agreeButton} />
                         </View>       
                     </View>
                 </View>

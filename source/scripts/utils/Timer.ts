@@ -51,6 +51,14 @@ export class Timer {
     this._isRunning = false;
     this._timerOverHandler();
   }
+  clear(): void {
+    if (this._timerId) {
+      clearTimeout(this._timerId);
+      this._timerId = null;
+    }
+    this._remainingTime = this._duration;
+    this._isRunning = false;
+  }
 }
 
 

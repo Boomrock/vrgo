@@ -23,7 +23,7 @@ export default function ExitChoice({modalWindow, header, textBut1, textBut2, act
            onRequestClose={toggleModal}>
                 <View style={ModalStyles.centeredView}>
                     <View style={ModalStyles.modalView}>
-                    <View style={ModalStyles.close}><Cross action={toggleModal}/></View>
+                    <View style={ModalStyles.close}><Cross action={toggleModal} externalStyles={undefined}/></View>
 
                         <View>
                             <Text style={styles.textTitle}>{header}</Text>

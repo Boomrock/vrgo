@@ -9,9 +9,10 @@ interface IntermediateScreenProps {
   nextButtonAction: () => void;
   completedExercises: number;
   totalExercises: number;
+  cancled: boolean;
 }
 
-const IntermediateScreen: React.FC<IntermediateScreenProps> = ({ nextButtonAction, completedExercises: executeExerciseCount, totalExercises: allExerciseCount }) => {
+const IntermediateScreen: React.FC<IntermediateScreenProps> = ({ nextButtonAction, completedExercises: executeExerciseCount, totalExercises: allExerciseCount, cancled }) => {
   
   const [time, setTime] = useState('');
   const [intervalId, setIntervalId] = useState<NodeJS.Timeout>();
@@ -32,17 +33,26 @@ const IntermediateScreen: React.FC<IntermediateScreenProps> = ({ nextButtonActio
   
     return `${minutes}:${formattedSeconds}`;
   }
+  useEffect(() => {
 
-  useEffect(()=>{
-    const id = setInterval(()=>{
+    if (cancled) {
+      clearInterval(intervalId);
+      timer.clear();
+    }
+  }, [cancled]);
+  
+  useEffect(() => {
+    const id = setInterval(() => {
       setTime(numberToTime(timer.runTime));
-    }, 1000)
+    }, 1000);
+  
     setIntervalId(id);
     timer.start();
     setTime(numberToTime(timer.runTime));
+  
+    return () => clearInterval(id); // Очищаем интервал при размонтировании
+  }, []);
 
-
-  },[])
   const nextExercise = () => {
     timer.stop();
   }

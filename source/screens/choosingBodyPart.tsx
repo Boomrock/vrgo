@@ -7,7 +7,7 @@ import { IDataProvider, Path } from '@scripts/interfaces/content-provider/IDataP
 import TooltipWin from '../components/Modal/tooltipWin';
 import OneButtonWin from '@components/Modal/oneButtonWin';
 import i18n from '@scripts/localization/i18next';
-import { BackButton, InfoButton, NextButtonEnabling } from '@components/buttonsComponent';
+import { BackButton, FullNextButtonEnabling, InfoButton, NextButtonEnabling } from '@components/buttonsComponent';
 
 // Получаем разрешение экрана
 const { width: disp_width, height: disp_height } = Dimensions.get('window');
@@ -23,6 +23,8 @@ export type ChoseBodyPart = {
 
 export default function СhoosingBodyPart({navigation}: {navigation: any}) {
   const [isCheckedModalWin, setCheckedModalWin] = useState(false);
+  const [bodyPartIsSelected, setBodyPartIsSelected] = useState(false);
+
 
   const [modalWindow, setModalWindow] = useState(true);
   const [savedChoseModalVisible, setSavedChoseModalVisible] = useState(true);
@@ -56,6 +58,12 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
     }).catch(()=>{
       setSavedChoseModalVisible(false);  
     })
+    dataProvider.GetSerializable(Path.choseBodyPart).then(bodyPart=>{
+      if(bodyPart != null){
+        setBodyPartIsSelected(true);
+      }
+    })
+    
   },[])
   const loadScene = () => {
     navigation.navigate(Screens.MainScreen)
@@ -125,14 +133,31 @@ export default function СhoosingBodyPart({navigation}: {navigation: any}) {
             </View>
         </TouchableOpacity>
       </View>
-      <View style={styles.btnContainer} >
-        <View style={{flex: 34, marginBottom: '2%'}}>
-          <BackButton action={loadScene}  text={i18n.t("Back")} rightCorner = {false}/>
-        </View>
-        <View style={{flex: 66, marginBottom: '2%', marginLeft: 5}}>
-          <NextButtonEnabling action={loadMainScene} text={i18n.t('Next')} enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)}/>
-        </View>
+      <View style={styles.btnContainer}>
+        {bodyPartIsSelected ? (
+          <>
+            <View style={{ flex: 34, marginBottom: '2%' }}>
+              <BackButton action={loadScene} text={i18n.t("Back")} rightCorner={false} />
+            </View>
+            <View style={{ flex: 66, marginBottom: '2%', marginLeft: 5 }}>
+              <NextButtonEnabling 
+                action={loadMainScene} 
+                text={i18n.t('Next')} 
+                enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)} 
+              />
+            </View>
+          </>
+        ) : (
+          <View style={{ flex: 66, marginBottom: '2%', marginLeft: 5 }}>
+            <FullNextButtonEnabling 
+              action={loadMainScene} 
+              text={i18n.t('Next')} 
+              enabled={(isCheckedRightHand || isCheckedLeftHand || isCheckedLeftLeg || isCheckedRightLeg)} 
+            />
+          </View>
+        )}
       </View>
+  
       <View style={styles.bodypartsview}>
         <View pointerEvents='none' style={{alignSelf: 'center', marginBottom: 5 }}>
           <Image resizeMode='contain' source={require('@images/bodyparts/head.png')}/>  

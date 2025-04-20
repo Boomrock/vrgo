@@ -23,9 +23,7 @@ export default function OneButtonWin({modalWindow, textHead, textBody, toggleMod
     const [isCheckedModalWin, setCheckedModalWin] = useState(false);
 
     const close = () => {
-        console.log("close")
         toggleModal();
-
       }
 
     return(

@@ -8,22 +8,25 @@ const { width: disp_width } = Dimensions.get('window');
 const sideMargin = 16;
 
 const dataFromJson = [ // Здесь мы берем откуда-то массив патологий
+
   { label: i18n.t(Pathology.Stroke), value: '1' },
   { label: i18n.t(Pathology.BrainInjury), value: '2' },
   { label: i18n.t(Pathology.SpinalCordInjury), value: '3' },
   { label: i18n.t(Pathology.MultipleSclerosis), value: '4' },
-  { label: i18n.t(Pathology.CerebralPalsy), value: '5' }];
+  { label: i18n.t(Pathology.CerebralPalsy), value: '5' },
+  { label: i18n.t(Pathology.PathologyNotListed), value: '0' }
+];
 
   const pathologyDictionary: Item[] = [
     { value: '1', label: Pathology.Stroke },
     { value: '2', label: Pathology.BrainInjury },
     { value: '3', label: Pathology.SpinalCordInjury },
     { value: '4', label: Pathology.MultipleSclerosis },
-    { value: '5', label: Pathology.CerebralPalsy }
+    { value: '5', label: Pathology.CerebralPalsy },
+    { value: '0', label: Pathology.PathologyNotListed }
 ];
-  const NoPatology = {label: i18n.t('My pathology is not listed'), value: '0'};
 
-  const data = [...dataFromJson, NoPatology];
+  const data = dataFromJson;
 
 interface Item {
     value: string;
@@ -43,17 +46,14 @@ export const DropdownComponent = ({ onSelect, dataProvider}: DropdownProps) => {
     useEffect(()=>{
       dataProvider.Get<Item>(Path.pathology).then(result=> {
           let item = dataFromJson.find(el => el.value === result?.value)
-          setSelectedItem(item);
+          setSelectedItem(item!);
       })
     }, []);
     const filterData = (text: string) => {
       const filtered = data.filter(item =>
         item.label.toLowerCase().includes(text.toLowerCase())
       );
-      const noPathologyItem = data.find(item => item.label === i18n.t('My pathology is not listed'));
-      if (noPathologyItem && !filtered.includes(noPathologyItem)) {
-        filtered.push(noPathologyItem);
-      }
+
       setFilteredData(filtered);
       setSearchText(text);
     };

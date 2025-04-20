@@ -121,8 +121,9 @@ function ExerciseComponent(prop: Prop) {
             <CustomButton source={rightArrowImage} onPress={goNext} />
           </View> : null
         }
-        <Text style={{ ...styles.instructions, paddingTop: 8, marginBottom: 8, marginTop: 8 }}>{exercise.preface}</Text>
         <ScrollView style={styles.scrollView} ref={scrollViewRef}>
+         <Text style={{ ...styles.instructions, paddingTop: 8, marginBottom: 8, marginTop: 8 }}>{exercise.preface}</Text>
+
           {exercise.steps.map((step, stepNumb) => (
             currentInstructionIndex === stepNumb ?
               (step.type === StepType.Sample ?
